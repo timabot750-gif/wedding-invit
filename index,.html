@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>1,5 года с тобой ❤️</title>
+  <style>
+    :root {
+      --primary: #d63384;
+      --secondary: #f8b7c5;
+      --bg-dark: #1a1a1d;
+      --text: #ffffff;
+      --accent: #ffd700;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #fdfbf7 0%, #eef2f3 100%);
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #333;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+    /* Заголовок с эффектом */
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin: 60px 0 20px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s ease forwards 0.2s;
+      text-shadow: 0 4px 12px rgba(214, 51, 132, 0.3);
+    }
+    h1 span { color: var(--primary); }
+
+    p.intro {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards 0.4s;
+    }
+
+    /* Галерея с проявлением */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      opacity: 0;
+      transform: scale(0.95);
+      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%) contrast(120%);
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+    .card:hover img {
+      filter: grayscale(0%) contrast(100%) brightness(110%);
+      transform: scale(1.03);
+    }
+    .card-text {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Блок «За что я тебя люблю» */
+    .love-reasons {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards 0.6s;
+    }
+    .reason-item {
+      margin-bottom: 16px;
+      padding-left: 24px;
+      position: relative;
+    }
+    .reason-item::before {
+      content: "❤️";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      font-size: 1.1rem;
+    }
+
+    /* Кнопка и секретное послание */
+    .action-block {
+      text-align: center;
+      margin: 40px 0;
+    }
+    button.main-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 18px 36px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(214, 51, 132, 0.35);
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+    button.main-btn:hover {
+      background: #b02a6b;
+      transform: scale(1.05);
+      box-shadow: 0 8px 28px rgba(214, 51, 132, 0.45);
+    }
+    button.main-btn.revealed {
+      animation: none;
+      background: #2ecc71;
+    }
+    #secret-message {
+      margin-top: 30px;
+      padding: 20px;
+      background: #fff8f0;
+      border-left: 5px solid var(--primary);
+      border-radius: 8px;
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.6s ease forwards;
+      text-align: left;
+    }
+
+    /* Музыкальная панель */
+    .music-panel {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 15px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 16px;
+      border: 1px solid rgba(214, 51, 132, 0.15);
+    }
+    .music-btn {
+      background: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 10px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .music-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Анимации */
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popIn {
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(214, 51, 132, 0.35); }
+      50% { transform: scale(1.03); box-shadow: 0 10px 30px rgba(214, 51, 132, 0.45); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Параллакс-фон */
+    .parallax {
+      min-height: 400px;
+      background-image: url('bg-heart.png'); /* Замени на свою картинку-фон, если есть */
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(253, 251, 247, 0.75);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Параллакс-блок (можно убрать, если не хочешь) -->
+  <div class="parallax">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="container">
+    <h1>1,5 года <span>с тобой</span> ❤️</h1>
+    <p class="intro">
+      Полтора года — это уже не просто «начало». Это наши привычки, наши шутки, которые понимаем только мы, и моменты, которые я хочу помнить всегда. Спасибо, что ты есть.
+    </p>
+
+    <!-- Галерея -->
+    <div class="gallery">
+      <div class="card"><img src="img1.jpg" alt="Мы вместе"><span class="card-text">Первый вечер</span></div>
+      <div class="card"><img src="img2.jpg" alt="Наши моменты"><span class="card-text">Тот самый день</span></div>
+      <div class="card"><img src="img3.jpg" alt="Счастливые моменты"><span class="card-text">Просто рядом</span></div>
+    </div>
+
+    <!-- Причины любви -->
+    <section class="love-reasons">
+      <h3 style="margin-bottom:20px; color:#d63384;">За что я тебя люблю:</h3>
+      <div class="reason-item">Как ты смеёшься над моими глупыми шутками — даже когда они совсем не смешные.</div>
+      <div class="reason-item">Как умеешь меня успокоить, когда всё идёт не так — одним своим голосом.</div>
+      <div class="reason-item">Как мы можем просто молчать рядом — и это всё равно будет самым уютным моментом дня.</div>
+      <div class="reason-item">За то, что ты делаешь обычные дни особенными — просто тем, что ты в них есть.</div>
+    </section>
+
+    <!-- Музыка -->
+    <div class="music-panel">
+      <p style="margin-bottom:10px;">🎵 Хочешь фоновую мелодию?</p>
+      <button class="music-btn" id="musicBtn">Включить музыку</button>
+      <!-- Если есть свой mp3, раскомментируй и укажи путь: -->
+      <!-- <audio id="bgMusic" loop><source src="my-song.mp3" type="audio/mpeg"></audio> -->
+    </div>
+
+    <!-- Кнопка-секрет -->
+    <div class="action-block">
+      <button class="main-btn" id="revealBtn">Нажми, чтобы прочитать секретную строчку</button>
+      <div id="secret-message">
+        <p>«Ты — мой самый любимый человек на свете. И через 1,5 года, и через 15 лет. Я хочу, чтобы у нас было ещё столько же историй, столько же вечеров и столько же „просто рядом“. Люблю тебя.»</p>
+        <p style="font-size:0.9rem; color:#666; margin-top:12px;">С любовью, [Тема]</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Простая логика для кнопки и музыки
+    const revealBtn = document.getElementById('revealBtn');
+    const secretMsg = document.getElementById('secret-message');
+    const musicBtn = document.getElementById('musicBtn');
+    const bgMusic = document.getElementById('bgMusic');
+
+    revealBtn.addEventListener('click', () => {
+      revealBtn.classList.add('revealed');
+      revealBtn.textContent = 'Спасибо, что прочитала ❤️';
+      secretMsg.style.display = 'block';
+    });
+
+    musicBtn.addEventListener('click', () => {
+      if (musicBtn.classList.contains('active')) {
+        musicBtn.classList.remove('active');
+        musicBtn.textContent = 'Включить музыку';
+        if (bgMusic) bgMusic.pause();
+      } else {
+        musicBtn.classList.add('active');
+        musicBtn.textContent = 'Выключить музыку';
+        if (bgMusic) bgMusic.play().catch(e => console.log('Автовоспроизведение заблокировано браузером'));
+      }
+    });
+
+    // Плавный скролл для мобильных
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
